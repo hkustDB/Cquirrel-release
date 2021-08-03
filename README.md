@@ -94,11 +94,11 @@ WORKLOAD = TPCH
 `> cd DemoTools/DataGenerator`  
 `> python DataGenerator.py`
 
-### Install the Cquirrel core into your maven repository
+### Install the cquirrel core file into your maven repository
 1. Make sure the Apache Maven with appropriate version is installed in your computer.
 
-2. Install `cquirrel.jar` into your mvn repository.  
-`> mvn install:install-file -Dfile=./cquirrel.jar -DgroupId=org.hkust -DartifactId=AJU -Dversion=1.0-SNAPSHOT -Dpackaging=jar`
+2. Install `cquirrel-core.jar` into your mvn repository.  
+`> mvn install:install-file -Dfile=./cquirrel-core-1.0-SNAPSHOT.jar -DgroupId=org.hkust -DartifactId=cquirrel-core -Dversion=1.0-SNAPSHOT -Dpackaging=jar`
 
 ### Boot the web backend of the demo
 1. Make sure that you have already installed the Python 3.8.5 and the relevant `pip` tools, which can install python dependencies.

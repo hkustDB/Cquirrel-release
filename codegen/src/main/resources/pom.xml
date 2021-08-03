@@ -18,7 +18,7 @@
     <dependencies>
         <dependency>
             <groupId>org.hkust</groupId>
-            <artifactId>AJU</artifactId>
+            <artifactId>cquirrel-core</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>

@@ -89,7 +89,7 @@ class CodeGen implements Runnable {
                 "    <dependencies>\n" +
                 "        <dependency>\n" +
                 "            <groupId>org.hkust</groupId>\n" +
-                "            <artifactId>AJU</artifactId>\n" +
+                "            <artifactId>cquirrel-core</artifactId>\n" +
                 "            <version>1.0-SNAPSHOT</version>\n" +
                 "        </dependency>\n" +
                 "        <dependency>\n" +
