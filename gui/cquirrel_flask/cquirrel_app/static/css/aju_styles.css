@@ -1,0 +1,17 @@
+.navbar-brand .img-responsive {
+    height: auto;
+    max-height: 25px;
+}
+
+header.masthead {
+    height: 72px;
+}
+
+.input-group > .input-group-append > .btn {
+    border-top-right-radius: 0.25rem;
+    border-bottom-right-radius: 0.25rem;
+}
+
+.codegen-log-area {
+    height: auto;
+}

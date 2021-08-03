@@ -1,0 +1,7 @@
+.flowdiag-card {
+    width: 98%;
+    /*margin-top: 20px;*/
+}
+.flowdiag-content {
+    min-height: 290px;
+}

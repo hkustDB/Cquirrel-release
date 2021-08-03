@@ -1,0 +1,7 @@
+.codegen-card {
+    width: 98%;
+    /*margin-top: 20px;*/
+}
+.ant-card-head-title {
+    text-align: left;
+}

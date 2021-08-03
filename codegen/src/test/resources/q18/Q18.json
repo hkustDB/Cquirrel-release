@@ -1,0 +1,103 @@
+{
+  "join_structure": [
+    {
+      "primary": "orders",
+      "foreign": "lineitem"
+    },
+    {
+      "primary": "customer",
+      "foreign": "orders"
+    }
+  ],
+  "RelationProcessFunction": [
+    {
+      "name": "Q18lineitem",
+      "relation": "lineitem",
+      "this_key": [
+        "orderkey"
+      ],
+      "next_key": [
+        "orderkey"
+      ],
+      "child_nodes": 1,
+      "is_Root": true,
+      "is_Last": true,
+      "rename_attribute": null,
+      "select_conditions": {}
+    },
+    {
+      "name": "Q18Orders",
+      "relation": "orders",
+      "this_key": [
+        "custkey"
+      ],
+      "next_key": [
+        "orderkey"
+      ],
+      "child_nodes": 1,
+      "is_Root": false,
+      "is_Last": true,
+      "rename_attribute": null,
+      "select_conditions": {}
+    },
+    {
+      "name": "Q18Customer",
+      "relation": "customer",
+      "this_key": [
+        "custkey"
+      ],
+      "next_key": [
+        "custkey"
+      ],
+      "child_nodes": 0,
+      "is_Root": false,
+      "is_Last": true,
+      "rename_attribute": null,
+      "select_conditions": {}
+    }
+  ],
+  "AggregateProcessFunction": [
+    {
+      "name": "Q18Aggregate",
+      "this_key": [
+        "orderkey"
+      ],
+      "output_key": [
+        "c_name",
+        "custkey",
+        "orderkey",
+        "o_orderdate",
+        "o_totalprice"
+      ],
+      "delta_output": true,
+      "AggregateValue": [
+        {
+          "name": "AGGREGATE",
+          "type": "attribute",
+          "relation": "lineitem",
+          "value": "l_quantity"
+        }
+      ],
+      "aggregation": "+",
+      "value_type": "Double",
+      "OutputSelectCondition": {
+        "values": [
+          {
+            "left_field": {
+              "type": "aggregate_attribute",
+              "name": "aggregate",
+              "var_type": "Double",
+              "store_type": "String"
+            },
+            "right_field": {
+              "type": "constant",
+              "var_type": "Int",
+              "value": "300"
+            },
+            "operator": ">"
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,115 @@
+{
+  "RelationProcessFunction": [
+    {
+      "name": "Q6Lineitem",
+      "relation": "lineitem",
+      "this_key": [
+        "orderkey",
+        "linenumber"
+      ],
+      "next_key": null,
+      "child_nodes": 0,
+      "is_Root": true,
+      "is_Last": true,
+      "rename_attribute": null,
+      "select_conditions": {
+        "operator": "&&",
+        "values": [
+          {
+            "left_field": {
+              "type": "attribute",
+              "relation": "lineitem",
+              "name": "l_shipdate"
+            },
+            "right_field": {
+              "type": "constant",
+              "var_type": "Date",
+              "value": "1994-01-01"
+            },
+            "operator": ">="
+          },
+          {
+            "left_field": {
+              "type": "attribute",
+              "relation": "lineitem",
+              "name": "l_shipdate"
+            },
+            "right_field": {
+              "type": "constant",
+              "var_type": "Date",
+              "value": "1995-01-01"
+            },
+            "operator": "<"
+          },
+          {
+            "left_field": {
+              "type": "attribute",
+              "relation": "lineitem",
+              "name": "l_discount"
+            },
+            "right_field": {
+              "type": "constant",
+              "var_type": "Double",
+              "value": "0.05"
+            },
+            "operator": ">"
+          },
+          {
+            "left_field": {
+              "type": "attribute",
+              "relation": "lineitem",
+              "name": "l_discount"
+            },
+            "right_field": {
+              "type": "constant",
+              "var_type": "Double",
+              "value": "0.07"
+            },
+            "operator": "<"
+          },
+          {
+            "left_field": {
+              "type": "attribute",
+              "relation": "lineitem",
+              "name": "l_quantity"
+            },
+            "right_field": {
+              "type": "constant",
+              "var_type": "int",
+              "value": "24"
+            },
+            "operator": "<"
+          }
+        ]
+      }
+    }
+  ],
+  "AggregateProcessFunction": [
+    {
+      "name": "Q6Aggregate",
+      "this_key": null,
+      "output_key": null,
+      "AggregateValue": [
+        {
+          "name": "revenue",
+          "type": "expression",
+          "operator": "*",
+          "values": [
+            {
+              "type": "attribute",
+              "relation": "lineitem",
+              "name": "l_extendedprice"
+            },
+            {
+              "type": "attribute",
+              "relation": "lineitem",
+              "name": "l_discount"
+            }
+          ]
+        }
+      ],
+      "aggregation": "+",
+      "value_type": "Double"
+    }
+  ]
+}

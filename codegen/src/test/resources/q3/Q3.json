@@ -1,0 +1,156 @@
+{
+  "join_structure": [
+    {
+      "primary": "Orders",
+      "foreign": "Lineitem"
+    },
+    {
+      "primary": "Customer",
+      "foreign": "Orders"
+    }
+  ],
+  "RelationProcessFunction": [
+    {
+      "name": "Q3Lineitem",
+      "relation": "lineitem",
+      "this_key": [
+        "orderkey"
+      ],
+      "next_key": [
+        "orderkey"
+      ],
+      "child_nodes": 1,
+      "is_Root": true,
+      "is_Last": true,
+      "rename_attribute": null,
+      "select_conditions": {
+        "operator": "&&",
+        "values": [
+          {
+            "left_field": {
+              "type": "attribute",
+              "relation": "lineitem",
+              "name": "l_shipdate"
+            },
+            "right_field": {
+              "type": "constant",
+              "var_type": "Date",
+              "value": "1995-03-15"
+            },
+            "operator": ">"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Q3Orders",
+      "relation": "orders",
+      "this_key": [
+        "custkey"
+      ],
+      "next_key": [
+        "orderkey"
+      ],
+      "child_nodes": 1,
+      "is_Root": false,
+      "is_Last": true,
+      "rename_attribute": null,
+      "select_conditions": {
+        "operator": "&&",
+        "values": [
+          {
+            "left_field": {
+              "type": "attribute",
+              "relation": "orders",
+              "name": "o_orderdate"
+            },
+            "right_field": {
+              "type": "constant",
+              "var_type": "Date",
+              "value": "1995-03-15"
+            },
+            "operator": "<"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Q3Customer",
+      "relation": "customer",
+      "this_key": [
+        "custkey"
+      ],
+      "next_key": [
+        "custkey"
+      ],
+      "child_nodes": 0,
+      "is_Root": false,
+      "is_Last": true,
+      "rename_attribute": null,
+      "select_conditions": {
+        "operator": "&&",
+        "values": [
+          {
+            "left_field": {
+              "type": "attribute",
+              "relation": "customer",
+              "name": "c_mktsegment"
+            },
+            "right_field": {
+              "type": "constant",
+              "var_type": "varchar",
+              "value": "BUILDING"
+            },
+            "operator": "=="
+          }
+        ]
+      }
+    }
+  ],
+  "AggregateProcessFunction": [
+    {
+      "name": "Q3Aggregate",
+      "this_key": [
+        "orderkey"
+      ],
+      "output_key": [
+        "orderkey",
+        "o_orderdate",
+        "o_shippriority"
+      ],
+      "delta_output": true,
+      "AggregateValue": [
+        {
+          "name": "revenue",
+          "type": "expression",
+          "values": [
+            {
+              "type": "attribute",
+              "relation": "lineitem",
+              "name": "l_extendedprice"
+            },
+            {
+              "type": "expression",
+              "operator": "-",
+              "values": [
+                {
+                  "type": "constant",
+                  "var_type": "int",
+                  "value": 1
+                },
+                {
+                  "type": "attribute",
+                  "relation": "lineitem",
+                  "name": "l_discount"
+                }
+              ]
+            }
+          ],
+          "operator": "*"
+        }
+      ],
+      "aggregation": "+",
+      "value_type": "Double"
+    }
+  ]
+}

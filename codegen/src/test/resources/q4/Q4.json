@@ -1,0 +1,112 @@
+{
+  "AggregateProcessFunction": [
+    {
+      "this_key": [
+        "o_orderpriority"
+      ],
+      "AggregateValue": [
+        {
+          "value_type": "int",
+          "name": "order_count",
+          "aggregation": "COUNT_DISTINCT",
+          "value": {
+            "name": "orderkey",
+            "type": "attribute",
+            "relation": "lineitem"
+          }
+        }
+      ],
+      "output_key": [
+        "o_orderpriority"
+      ],
+      "name": "QAggregate0",
+      "delta_output": true
+    }
+  ],
+  "join_structure": [
+    {
+      "primary": "orders",
+      "foreign": "lineitem"
+    }
+  ],
+  "RelationProcessFunction": [
+    {
+      "this_key": [
+        "orderkey"
+      ],
+      "is_Last": true,
+      "select_conditions": {
+        "values": [
+          {
+            "right_field": {
+              "name": "l_recriptdate",
+              "type": "attribute",
+              "relation": "lineitem"
+            },
+            "left_field": {
+              "name": "l_commitdate",
+              "type": "attribute",
+              "relation": "lineitem"
+            },
+            "type": "expression",
+            "operator": "<"
+          }
+        ],
+        "operator": "&&"
+      },
+      "name": "Qlineitem",
+      "next_key": [
+        "o_orderpriority"
+      ],
+      "is_Root": true,
+      "child_nodes": 1,
+      "relation": "lineitem"
+    },
+    {
+      "this_key": [
+        "orderkey"
+      ],
+      "is_Last": true,
+      "select_conditions": {
+        "values": [
+          {
+            "right_field": {
+              "var_type": "Date",
+              "type": "constant",
+              "value": "1993-07-01"
+            },
+            "left_field": {
+              "name": "o_orderdate",
+              "type": "attribute",
+              "relation": "orders"
+            },
+            "type": "expression",
+            "operator": ">="
+          },
+          {
+            "right_field": {
+              "var_type": "Date",
+              "type": "constant",
+              "value": "1993-10-01"
+            },
+            "left_field": {
+              "name": "o_orderdate",
+              "type": "attribute",
+              "relation": "orders"
+            },
+            "type": "expression",
+            "operator": "<"
+          }
+        ],
+        "operator": "&&"
+      },
+      "name": "Qorders",
+      "next_key": [
+        "orderkey"
+      ],
+      "is_Root": false,
+      "child_nodes": 0,
+      "relation": "orders"
+    }
+  ]
+}

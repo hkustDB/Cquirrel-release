@@ -1,0 +1,10 @@
+.querytable-card {
+    width: 98%;
+    /*margin-top: 20px;*/
+}
+/*.querytable-content {*/
+/*    min-height: 250px;*/
+/*}*/
+.ant-empty-normal {
+    margin: 85px 0 !important;
+}

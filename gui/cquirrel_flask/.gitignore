@@ -1,0 +1,16 @@
+
+*.pyc
+*.pyo
+
+
+tmp/
+__pycache__/
+log/codegen.log
+jar/generated-code
+jar/*.json
+jar/*.original
+jar/*.log
+../cquirrel_flask/.idea
+uploads/*.json
+cquirrel_app/resources
+

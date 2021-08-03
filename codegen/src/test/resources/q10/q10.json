@@ -1,0 +1,187 @@
+{
+    "join_structure": [
+      {
+        "primary": "Orders",
+        "foreign": "Lineitem"
+      },
+      {
+        "primary": "Customer",
+        "foreign": "Orders"
+      },
+      {
+          "primary":"Nation",
+          "foreign":"Customer"
+      }
+    ],
+    "RelationProcessFunction": [
+      {
+        "name": "Q10Lineitem",
+        "relation": "lineitem",
+        "this_key": [
+          "orderkey" 
+        ],
+        "next_key": [
+          "custkey", 
+          "c_name",
+          "c_acctbal",
+          "c_phone",
+          "c_address",
+          "c_comment",
+          "n_name"
+        ],
+        "child_nodes": 1,
+        "is_Root": true,
+        "is_Last": true,
+        "rename_attribute": null,
+        "select_conditions": {
+          "operator": "&&",
+          "values": [
+            {
+              "left_field": {
+                "type": "attribute",
+                "relation": "lineitem",
+                "name": "l_returnflag"
+              },
+              "right_field": {
+                "type": "constant",
+                "var_type": "varchar",
+                "value": "R"
+              },
+              "operator": "=="
+            }
+          ]
+        }
+      },
+      {
+        "name": "Q10Orders",
+        "relation": "orders",
+        "this_key": [
+          "custkey"
+        ],
+        "next_key": [
+          "orderkey"
+        ],
+        "child_nodes": 1,
+        "is_Root": false,
+        "is_Last": true,
+        "rename_attribute": null,
+        "select_conditions": {
+          "operator": "&&",
+          "values": [
+            {
+              "left_field": {
+                "type": "attribute",
+                "relation": "orders",
+                "name": "o_orderdate"
+              },
+              "right_field": {
+                "type": "constant",
+                "var_type": "Date",
+                "value": "1993-10-01"
+              },
+              "operator": ">="
+            },
+            {
+                "left_field": {
+                  "type": "attribute",
+                  "relation": "orders",
+                  "name": "o_orderdate"
+                },
+                "right_field": {
+                  "type": "constant",
+                  "var_type": "Date",
+                  "value": "1994-01-01"
+                },
+                "operator": "<"
+              }
+          ]
+        }
+      },
+      {
+        "name": "Q10Customer",
+        "relation": "customer",
+        "this_key": [
+          "nationkey"
+        ],
+        "next_key": [
+          "custkey"
+        ],
+        "child_nodes": 1,
+        "is_Root": false,
+        "is_Last": true,
+        "rename_attribute": null,
+        "select_conditions": {}
+      },
+      {
+        "name": "Q10Nation",
+        "relation": "nation",
+        "this_key": [
+          "nationkey"
+        ],
+        "next_key": [
+          "nationkey"
+        ],
+        "child_nodes": 0,
+        "is_Root": false,
+        "is_Last": true,
+        "rename_attribute": null,
+        "select_conditions": {}
+      }
+    ],
+    "AggregateProcessFunction": [
+      {
+        "name": "Q10Aggregate",
+        "this_key": [
+            "custkey", 
+            "c_name",
+            "c_acctbal",
+            "c_phone",
+            "c_address",
+            "c_comment",
+            "n_name"
+        ],
+        "output_key": [
+            "custkey", 
+            "c_name",
+            "c_acctbal",
+            "c_phone",
+            "c_address",
+            "c_comment",
+            "n_name"
+        ],
+        "delta_output": true,
+        "AggregateValue": [
+          {
+            "name": "revenue",
+            "type": "expression",
+            "values": [
+              {
+                "type": "attribute",
+                "relation": "lineitem",
+                "name": "l_extendedprice"
+              },
+              {
+                "type": "expression",
+                "operator": "-",
+                "values": [
+                  {
+                    "type": "constant",
+                    "var_type": "int",
+                    "value": 1
+                  },
+                  {
+                    "type": "attribute",
+                    "relation": "lineitem",
+                    "name": "l_discount"
+                  }
+                ]
+              }
+            ],
+            "operator": "*"
+          }
+        ],
+        "aggregation": "+",
+        "value_type": "Double"
+      }
+    ]
+  }
